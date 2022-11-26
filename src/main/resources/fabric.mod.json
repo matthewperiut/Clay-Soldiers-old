@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.matthewperiut.clay.ClaySoldiers"
+      "com.matthewperiut.clay.Clay"
     ],
     "client": [
-      "com.matthewperiut.clay.ClaySoldiersClient"
+      "com.matthewperiut.clay.ClayClient"
     ]
   },
   "depends": {

@@ -1,9 +1,7 @@
 package com.matthewperiut.clay.entity.soldier;
 
-import com.matthewperiut.clay.entity.ai.goal.ActiveTargetExludingOwnKindGoal;
+import com.matthewperiut.clay.Clay;
 import com.matthewperiut.clay.entity.ai.goal.MeleeAttackTinyGoal;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
@@ -11,13 +9,12 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -26,17 +23,17 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.CustomInstructionKeyframeEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, IAnimationTickable {
+import static com.matthewperiut.clay.entity.soldier.Targets.AddTargets;
 
-    public int type = SoldierTypes.regular.ordinal();
+public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, IAnimationTickable
+{
+    public static final Identifier TEXTURE_ID = new Identifier(Clay.MOD_ID, "textures/entity/soldier/lightgray.png");
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private boolean isAnimating = false;
 
@@ -48,9 +45,9 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     public static DefaultAttributeContainer setAttributes()
     {
         return PathAwareEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.00)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.00)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25f)
                  .build();
     }
@@ -92,29 +89,16 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     {
         animationData.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
     }
-/*
-    @Override
-    public void registerControllers(AnimationData data) {
-        AnimationController<ClaySoldierEntity> controller = new AnimationController<>(this, "controller", 0,
-                this::predicate);
-        AnimationController<ClaySoldierEntity> controllerspin = new AnimationController<>(this, "controllerspin", 0,
-                this::predicateSpin);
-        controller.registerCustomInstructionListener(this::customListener);
-        data.addAnimationController(controller);
-        data.addAnimationController(controllerspin);
-    }
 
-    private <ENTITY extends IAnimatable> void customListener(CustomInstructionKeyframeEvent<ENTITY> event) {
-        final ClientPlayerEntity player = MinecraftClient.getInstance().player;
-        if (player != null) {
-            player.sendMessage(Text.translatable("KeyFraming"), true);
-        }
-    }
-*/
     @Override
     public AnimationFactory getFactory()
     {
         return this.factory;
+    }
+
+    protected void selectTargets()
+    {
+        AddTargets(this, this.targetSelector);
     }
 
     @Override
@@ -124,7 +108,7 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 1, 1));
         this.goalSelector.add(3, new MeleeAttackTinyGoal(this, 1, false));
 
-        this.targetSelector.add(2, new ActiveTargetExludingOwnKindGoal<>(this, ClaySoldierEntity.class, true));
+        selectTargets();
 
         super.initGoals();
     }
