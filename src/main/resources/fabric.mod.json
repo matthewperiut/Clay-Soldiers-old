@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "clay",
+  "version": "${version}",
+
+  "name": "Clay Soldiers",
+  "description": "This adds clay soldiers that attack for you!",
+  "authors": [
+    "Slainlite"
+  ],
+  "contact": {
+    "issues": "https://github.com/matthewperiut/clay-soldiers/issues",
+    "sources": "https://github.com/matthewperiut/clay-soldiers"
+  },
+
+  "license": "MIT",
+  "icon": "assets/clay/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.matthewperiut.clay.ClaySoldiers"
+    ],
+    "client": [
+      "com.matthewperiut.clay.ClaySoldiersClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.10",
+    "fabric-api": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  }
+}
