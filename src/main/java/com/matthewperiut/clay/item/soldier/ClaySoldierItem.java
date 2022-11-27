@@ -1,6 +1,7 @@
 package com.matthewperiut.clay.item.soldier;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
@@ -22,7 +23,7 @@ import java.util.Objects;
 
 public class ClaySoldierItem extends Item
 {
-    private final EntityType<?> type;
+    protected final EntityType<?> type;
 
     public ClaySoldierItem(EntityType<? extends MobEntity> type, Item.Settings settings)
     {

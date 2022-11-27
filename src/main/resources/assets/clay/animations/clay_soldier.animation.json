@@ -93,6 +93,57 @@
 				}
 			}
 		},
+		"animation.clay_soldier.ride": {
+			"animation_length": 1,
+			"loop": true,
+			"bones": {
+				"rleg": {
+					"rotation": {
+						"vector": [-40, -30, -15]
+					},
+					"position": {
+						"vector": [0, -1, 0]
+					}
+				},
+				"lleg": {
+					"rotation": {
+						"vector": [-40, 30, 15]
+					},
+					"position": {
+						"vector": [0, -1, 0]
+					}
+				},
+				"larm": {
+					"rotation": {
+						"vector": [-40, -10, -15]
+					},
+					"position": {
+						"vector": [0, -1, 0]
+					}
+				},
+				"rarm": {
+					"rotation": {
+						"vector": [-40, 15, 10]
+					},
+					"position": {
+						"vector": [0, -1, 0]
+					}
+				},
+				"torso": {
+					"position": {
+						"vector": [0, -1, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [0, -1, 0]
+					}
+				}
+			}
+		},
 		"animation.clay_soldier.attack": {
 			"animation_length": 0.45833,
 			"bones": {

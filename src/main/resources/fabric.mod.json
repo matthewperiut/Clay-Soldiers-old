@@ -9,6 +9,7 @@
     "Slainlite"
   ],
   "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/clay-soldiers-reborn",
     "issues": "https://github.com/matthewperiut/clay-soldiers/issues",
     "sources": "https://github.com/matthewperiut/clay-soldiers"
   },
@@ -26,6 +27,7 @@
     ]
   },
   "depends": {
+    "geckolib3": "*",
     "fabricloader": ">=0.14.10",
     "fabric-api": "*",
     "minecraft": "~1.19",

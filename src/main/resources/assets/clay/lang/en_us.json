@@ -33,5 +33,11 @@
   "item.clay.soldier.gray": "Gray Soldier",
   "entity.clay.soldier.gray": "Gray Soldier",
   "item.clay.soldier.white": "White Soldier",
-  "entity.clay.soldier.white": "White Soldier"
+  "entity.clay.soldier.white": "White Soldier",
+
+  "item.clay.horse.dirt": "Dirt Horse",
+  "entity.clay.horse.dirt": "Dirt Horse",
+  "entity.clay.horse.grass": "Grass Horse",
+  "entity.clay.horse.mycelium": "Mycelium Horse",
+  "entity.clay.horse.snow": "Snow Horse"
 }

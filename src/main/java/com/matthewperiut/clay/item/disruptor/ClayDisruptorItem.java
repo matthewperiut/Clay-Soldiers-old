@@ -1,5 +1,6 @@
 package com.matthewperiut.clay.item.disruptor;
 
+import com.matthewperiut.clay.entity.horse.HorseDollEntity;
 import com.matthewperiut.clay.entity.soldier.ClaySoldierEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -34,7 +35,7 @@ public class ClayDisruptorItem extends ToolItem
         boolean found = false;
         for (Entity entity : entityList)
         {
-            if (entity instanceof ClaySoldierEntity)
+            if (entity instanceof ClaySoldierEntity || entity instanceof HorseDollEntity)
             {
                 entity.kill();
                 found = true;

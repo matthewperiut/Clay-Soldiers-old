@@ -2,14 +2,18 @@ package com.matthewperiut.clay.entity.soldier;
 
 import com.matthewperiut.clay.Clay;
 import com.matthewperiut.clay.entity.ai.goal.MeleeAttackTinyGoal;
+import com.matthewperiut.clay.entity.horse.HorseDollEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -37,6 +41,8 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private boolean isAnimating = false;
 
+    public boolean hasWeapon = true;
+
     public ClaySoldierEntity(EntityType<? extends PathAwareEntity> type, World worldIn)
     {
         super(type, worldIn);
@@ -45,15 +51,20 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     public static DefaultAttributeContainer setAttributes()
     {
         return PathAwareEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.00)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.00f)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25f)
                  .build();
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
     {
+        if (this.hasVehicle())
+        {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.clay_soldier.ride"));
+            return PlayState.CONTINUE;
+        }
         if (event.isMoving())
         {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.clay_soldier.run"));
@@ -67,12 +78,14 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
 
     private PlayState attackPredicate(AnimationEvent event)
     {
-        if (this.handSwinging && event.getController().getAnimationState().equals(AnimationState.Stopped))
+        if (this.handSwinging)
         {
             event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.chomper.attack"));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.clay_soldier.attack"));
             this.handSwinging = false;
         }
+
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.clay_soldier.idle"));
         return PlayState.CONTINUE;
     }
 
@@ -88,6 +101,7 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     public void registerControllers(AnimationData animationData)
     {
         animationData.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        animationData.addAnimationController(new AnimationController(this, "attackController", 0, this::attackPredicate));
     }
 
     @Override
@@ -122,7 +136,10 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     public boolean handleAttack(Entity attacker)
     {
         if (attacker instanceof PlayerEntity)
+        {
             kill();
+        }
+
         return super.handleAttack(attacker);
     }
 
@@ -131,11 +148,25 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         return SoundEvents.BLOCK_GRAVEL_BREAK;
     }
 
-    @Nullable
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.BLOCK_GRAVEL_STEP;
     }
 
+    @Override
+    public boolean collidesWith(Entity other)
+    {
+        //this.startRiding(other);
+        if (other instanceof HorseDollEntity)
+        {
+            this.startRiding(other);
+        }
+        return super.collidesWith(other);
+    }
 
+    @Override
+    public void onPlayerCollision(PlayerEntity player) {
+        //this.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.SHEARS, 1));
+        super.onPlayerCollision(player);
+    }
 }
