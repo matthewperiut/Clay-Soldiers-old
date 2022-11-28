@@ -1,7 +1,12 @@
 {
   "itemGroup.clay.clay_group": "Clay Soldiers (Dolls)",
+  "itemGroup.clay.clay_misc_group": "Clay Soldiers (Misc)",
   "item.clay.disruptor.clay": "Clay Disruptor",
+  "item.clay.disruptor.terracotta": "Terracotta Disruptor",
+  "item.clay.disruptor.obsidian": "Obsidian Disruptor",
+  "item.clay.disruptor.range": "Kills Clay Creatures in 32x32 Block Area",
 
+  "item.clay.soldier.brick": "Brick Soldier",
   "item.clay.soldier.clay": "Clay Soldier",
   "entity.clay.soldier.clay": "Clay Soldier",
   "item.clay.soldier.red": "Red Soldier",
@@ -35,9 +40,28 @@
   "item.clay.soldier.white": "White Soldier",
   "entity.clay.soldier.white": "White Soldier",
 
+  "item.clay.horse.brick": "Brick Horse",
   "item.clay.horse.dirt": "Dirt Horse",
   "entity.clay.horse.dirt": "Dirt Horse",
   "entity.clay.horse.grass": "Grass Horse",
   "entity.clay.horse.mycelium": "Mycelium Horse",
-  "entity.clay.horse.snow": "Snow Horse"
+  "entity.clay.horse.snow": "Snow Horse",
+  "item.clay.horse.sand": "Sand Horse",
+  "entity.clay.horse.sand": "Sand Horse",
+  "item.clay.horse.gravel": "Gravel Horse",
+  "entity.clay.horse.gravel": "Gravel Horse",
+  "item.clay.horse.snowy": "Snow Horse",
+  "entity.clay.horse.snowy": "Snow Horse",
+  "item.clay.horse.grassy": "Grass Horse",
+  "entity.clay.horse.grassy": "Grass Horse",
+  "item.clay.horse.lapis": "Lapis Horse",
+  "entity.clay.horse.lapis": "Lapis Horse",
+  "item.clay.horse.carrot": "Carrot Horse",
+  "entity.clay.horse.carrot": "Carrot Horse",
+  "item.clay.horse.clay": "Clay Horse",
+  "entity.clay.horse.clay": "Clay Horse",
+  "item.clay.horse.soul_sand": "Soul Sand Horse",
+  "entity.clay.horse.soul_sand": "Soul Sand Horse",
+  "item.clay.horse.cake": "Cake Horse",
+  "entity.clay.horse.cake": "Cake Horse"
 }

@@ -169,4 +169,21 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         //this.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.SHEARS, 1));
         super.onPlayerCollision(player);
     }
+
+
+    boolean dropBrick = false;
+    @Override
+    protected Identifier getLootTableId() {
+        if (dropBrick)
+            return new Identifier("clay:entities/soldier/brick");
+        return super.getLootTableId();
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource)
+    {
+        if(damageSource.isFire())
+            dropBrick = true;
+        super.onDeath(damageSource);
+    }
 }

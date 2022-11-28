@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -98,5 +99,21 @@ public class HorseDollEntity extends PathAwareEntity implements IAnimatable, IAn
         if (attacker instanceof PlayerEntity)
             kill();
         return super.handleAttack(attacker);
+    }
+
+    boolean dropBrick = false;
+    @Override
+    protected Identifier getLootTableId() {
+        if (dropBrick)
+            return new Identifier("clay:entities/horse/brick");
+        return super.getLootTableId();
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource)
+    {
+        if(damageSource.isFire())
+            dropBrick = true;
+        super.onDeath(damageSource);
     }
 }

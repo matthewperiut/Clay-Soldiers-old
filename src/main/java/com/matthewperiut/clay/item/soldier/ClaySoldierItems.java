@@ -16,6 +16,8 @@ import static com.matthewperiut.clay.item.ClayItems.registerItem;
 
 public class ClaySoldierItems
 {
+    public static final Item BRICK_SOLDIER = registerItem("soldier/brick", new Item(new FabricItemSettings().fireproof().maxCount(16).group(ClayItemGroup.CLAY_MISC_GROUP)));
+
     public static final Item CLAY_SOLDIER = registerClaySoldierItem("soldier/clay", SoldierEntities.CLAY_SOLDIER, 0xAFB5C6);
     public static final Item RED_SOLDIER = registerClaySoldierItem("soldier/red", SoldierEntities.RED_SOLDIER, 0xF54E42);
     public static final Item YELLOW_SOLDIER = registerClaySoldierItem("soldier/yellow", SoldierEntities.YELLOW_SOLDIER, 0xF3CA2F);

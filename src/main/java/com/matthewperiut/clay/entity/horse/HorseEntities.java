@@ -37,6 +37,42 @@ public class HorseEntities
             Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/snow"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
                     .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> SAND_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/sand"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> GRAVEL_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/gravel"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> FULL_SNOW_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/snowy"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> FULL_GRASS_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/grassy"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> LAPIS_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/lapis"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> CARROT_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/carrot"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> CLAY_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/clay"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> SOUL_SAND_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/soul_sand"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
+    public static final EntityType<HorseDollEntity> CAKE_HORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Clay.MOD_ID, "horse/cake"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HorseDollEntity::new)
+                    .dimensions(EntityDimensions.fixed(width, height)).build());
 
     public static void register()
     {
@@ -44,6 +80,15 @@ public class HorseEntities
         registerHorse(GRASS_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/dirt2.png"));
         registerHorse(MYCELIUM_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/dirt3.png"));
         registerHorse(SNOW_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/dirt4.png"));
+        registerHorse(SAND_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/sand.png"));
+        registerHorse(GRAVEL_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/gravel3.png"));
+        registerHorse(FULL_GRASS_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/grass1.png"));
+        registerHorse(FULL_SNOW_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/snow.png"));
+        registerHorse(LAPIS_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/lapis1.png"));
+        registerHorse(CARROT_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/carrot1.png"));
+        registerHorse(CLAY_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/clay.png"));
+        registerHorse(SOUL_SAND_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/soulsand1.png"));
+        registerHorse(CAKE_HORSE, new Identifier(Clay.MOD_ID, "textures/entity/mount/horse/cake.png"));
     }
 
     private static void registerHorse(EntityType<? extends HorseDollEntity> entityType, Identifier textureID)
