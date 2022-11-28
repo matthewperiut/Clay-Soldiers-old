@@ -1,13 +1,13 @@
-package com.matthewperiut.clay.item.soldier;
+package com.matthewperiut.clay.item.common;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -15,23 +15,32 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class ClaySoldierItem extends Item
+public class SpawnDollItem extends Item
 {
-    protected final EntityType<?> type;
-
-    public ClaySoldierItem(EntityType<? extends MobEntity> type, Item.Settings settings)
+    public ArrayList<EntityType<?>> types;
+    public SpawnDollItem(ArrayList<EntityType<?>> types, Settings settings)
     {
         super(settings);
-        this.type = type;
+        this.types = types;
     }
 
-    public ActionResult useOnBlock(ItemUsageContext context) {
+    public SpawnDollItem(EntityType<? extends MobEntity> defaultType, Settings settings)
+    {
+        super(settings);
+        this.types = new ArrayList<>();
+        types.add(defaultType);
+    }
+
+    public ActionResult useOnBlock(ItemUsageContext context)
+    {
         World world = context.getWorld();
         if (!(world instanceof ServerWorld))
         {
@@ -70,16 +79,24 @@ public class ClaySoldierItem extends Item
         }
     }
 
-    public EntityType<?> getEntityType(@Nullable NbtCompound nbt) {
+    public EntityType<?> getEntityType(@Nullable NbtCompound nbt)
+    {
+        if (types.size() < 1)
+            return null;
+
         if (nbt != null && nbt.contains("EntityTag", 10))
         {
             NbtCompound nbtCompound = nbt.getCompound("EntityTag");
             if (nbtCompound.contains("id", 8))
             {
-                return (EntityType)EntityType.get(nbtCompound.getString("id")).orElse(this.type);
+                return EntityType.get(nbtCompound.getString("id")).orElse(types.get(0));
             }
         }
 
-        return this.type;
+        if (types.size() == 1)
+            return types.get(0);
+
+        int selected = Random.createLocal().nextBetween(0, types.size()-1);
+        return types.get(selected);
     }
 }

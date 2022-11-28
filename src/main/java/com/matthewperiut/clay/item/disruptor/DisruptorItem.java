@@ -2,7 +2,7 @@ package com.matthewperiut.clay.item.disruptor;
 
 import com.matthewperiut.clay.entity.horse.HorseDollEntity;
 import com.matthewperiut.clay.entity.soldier.ClaySoldierEntity;
-import net.minecraft.block.Material;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -35,13 +36,10 @@ public class DisruptorItem extends ToolItem
         unlimited = true;
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
+    public boolean killClay(World world, Vec3d pos)
     {
-        ItemStack itemStack = user.getStackInHand(hand);
-
-        Box area = new Box(user.getPos().subtract(new Vec3d(16,16,16)),user.getPos().add(new Vec3d(16,16,16)));
-        List<Entity> entityList = world.getOtherEntities(user, area);
+        Box area = new Box(pos.subtract(new Vec3d(16,16,16)), pos.add(new Vec3d(16,16,16)));
+        List<Entity> entityList = world.getOtherEntities(null, area);
 
         boolean found = false;
         for (Entity entity : entityList)
@@ -53,13 +51,45 @@ public class DisruptorItem extends ToolItem
             }
         }
 
+        return found;
+    }
+
+    public boolean removeClay(World world, Entity user, ItemStack stack)
+    {
+        boolean found = killClay(world, user.getPos());
+
         if (found)
         {
             if (!unlimited)
-                itemStack.damage(1, user, (e) -> { e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND); });
-            user.getItemCooldownManager().set(this, 20);
-            return TypedActionResult.consume(itemStack);
+            {
+                if (stack.damage(1, world.getRandom(), (ServerPlayerEntity)null))
+                {
+                    return true;
+                }
+            }
+
+            if (user instanceof PlayerEntity)
+            {
+                ((PlayerEntity) user).getItemCooldownManager().set(this, 20);
+                return true;
+            }
+            else
+            {
+                PlayerEntity player = (PlayerEntity) user;
+                if (!unlimited)
+                    stack.damage(1, player, (e) -> { e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND); });
+                return true;
+            }
         }
+        return false;
+    }
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
+    {
+        ItemStack itemStack = user.getStackInHand(hand);
+
+        if (removeClay(world, user, itemStack))
+            return TypedActionResult.consume(itemStack);
 
         return TypedActionResult.fail(itemStack);
     }

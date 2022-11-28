@@ -3,9 +3,11 @@ package com.matthewperiut.clay.item.horse;
 import com.matthewperiut.clay.Clay;
 import com.matthewperiut.clay.entity.horse.HorseDollEntity;
 import com.matthewperiut.clay.entity.horse.HorseEntities;
-import com.matthewperiut.clay.item.ClayItemGroup;
+import com.matthewperiut.clay.item.common.ClayItemGroup;
+import com.matthewperiut.clay.item.soldier.SoldierDollItems;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -44,14 +46,15 @@ public class HorseDollItems
 
     public static void register()
     {
-        DIRT_HORSE.entityTypes.add(HorseEntities.GRASS_HORSE);
-        DIRT_HORSE.entityTypes.add(HorseEntities.MYCELIUM_HORSE);
-        DIRT_HORSE.entityTypes.add(HorseEntities.SNOW_HORSE);
+        DIRT_HORSE.types.add(HorseEntities.GRASS_HORSE);
+        DIRT_HORSE.types.add(HorseEntities.MYCELIUM_HORSE);
+        DIRT_HORSE.types.add(HorseEntities.SNOW_HORSE);
     }
 
     public static HorseDollItem registerHorseDollItem(String name, EntityType<? extends HorseDollEntity> entity, int color)
     {
         HorseDollItem item = registerHorseDollItem(name, entity);
+        DispenserBlock.registerBehavior(item, SoldierDollItems.dollDispenserBehavior);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> color, item);
         return item;
     }

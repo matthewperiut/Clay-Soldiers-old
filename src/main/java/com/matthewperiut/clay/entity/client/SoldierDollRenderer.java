@@ -16,11 +16,11 @@ import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.ExtendedGeoEntityRenderer;
 
-public class ClaySoldierRenderer extends ExtendedGeoEntityRenderer<ClaySoldierEntity>
+public class SoldierDollRenderer extends ExtendedGeoEntityRenderer<ClaySoldierEntity>
 {
     protected ItemStack mainHandItem, offHandItem, helmetItem, chestplateItem, leggingsItem, bootsItem;
     public Identifier texture_id;
-    public ClaySoldierRenderer(EntityRendererFactory.Context renderManager, AnimatedGeoModel<ClaySoldierEntity> modelProvider, Identifier texture_id)
+    public SoldierDollRenderer(EntityRendererFactory.Context renderManager, AnimatedGeoModel<ClaySoldierEntity> modelProvider, Identifier texture_id)
     {
         super(renderManager, modelProvider);
         this.texture_id = texture_id;

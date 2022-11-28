@@ -1,12 +1,15 @@
 package com.matthewperiut.clay.item.soldier;
 
 import com.matthewperiut.clay.Clay;
-import com.matthewperiut.clay.entity.ClayEntities;
 import com.matthewperiut.clay.entity.soldier.ClaySoldierEntity;
 import com.matthewperiut.clay.entity.soldier.SoldierEntities;
-import com.matthewperiut.clay.item.ClayItemGroup;
+import com.matthewperiut.clay.item.common.ClayItemGroup;
+import com.matthewperiut.clay.item.common.DollDispenserBehavior;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -14,8 +17,9 @@ import net.minecraft.util.registry.Registry;
 
 import static com.matthewperiut.clay.item.ClayItems.registerItem;
 
-public class ClaySoldierItems
+public class SoldierDollItems
 {
+    public static final DispenserBehavior dollDispenserBehavior = new DollDispenserBehavior();
     public static final Item BRICK_SOLDIER = registerItem("soldier/brick", new Item(new FabricItemSettings().fireproof().maxCount(16).group(ClayItemGroup.CLAY_MISC_GROUP)));
 
     public static final Item CLAY_SOLDIER = registerClaySoldierItem("soldier/clay", SoldierEntities.CLAY_SOLDIER, 0xAFB5C6);
@@ -37,7 +41,8 @@ public class ClaySoldierItems
 
     public static Item registerClaySoldierItem(String name, EntityType<? extends ClaySoldierEntity> entity, int color)
     {
-        Item item = Registry.register(Registry.ITEM, new Identifier(Clay.MOD_ID, name), new ClaySoldierItem(entity, new FabricItemSettings().maxCount(16).group(ClayItemGroup.CLAY_GROUP)));
+        Item item = Registry.register(Registry.ITEM, new Identifier(Clay.MOD_ID, name), new SoldierDollItem(entity, new FabricItemSettings().maxCount(16).group(ClayItemGroup.CLAY_GROUP)));
+        DispenserBlock.registerBehavior(item, dollDispenserBehavior);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> color, item);
         return item;
     }

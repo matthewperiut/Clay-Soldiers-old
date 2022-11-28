@@ -5,10 +5,10 @@ import com.matthewperiut.clay.entity.soldier.ClaySoldierEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class ClaySoldierModel extends AnimatedGeoModel<ClaySoldierEntity>
+public class SoldierDollModel extends AnimatedGeoModel<ClaySoldierEntity>
 {
     Identifier texture_id;
-    public ClaySoldierModel(Identifier texture_id)
+    public SoldierDollModel(Identifier texture_id)
     {
         this.texture_id = texture_id;
     }

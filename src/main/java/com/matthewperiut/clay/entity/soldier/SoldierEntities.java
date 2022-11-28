@@ -1,8 +1,8 @@
 package com.matthewperiut.clay.entity.soldier;
 
 import com.matthewperiut.clay.Clay;
-import com.matthewperiut.clay.entity.client.ClaySoldierModel;
-import com.matthewperiut.clay.entity.client.ClaySoldierRenderer;
+import com.matthewperiut.clay.entity.client.SoldierDollModel;
+import com.matthewperiut.clay.entity.client.SoldierDollRenderer;
 import com.matthewperiut.clay.entity.soldier.variant.*;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -106,6 +106,6 @@ public class SoldierEntities
     private static void registerSoldier(EntityType<? extends ClaySoldierEntity> entityType, Identifier textureID)
     {
         FabricDefaultAttributeRegistry.register(entityType, RegularSoldier.setAttributes());
-        EntityRendererRegistry.register(entityType, (context) -> { return new ClaySoldierRenderer(context, new ClaySoldierModel(textureID), textureID); });
+        EntityRendererRegistry.register(entityType, (context) -> { return new SoldierDollRenderer(context, new SoldierDollModel(textureID), textureID); });
     }
 }

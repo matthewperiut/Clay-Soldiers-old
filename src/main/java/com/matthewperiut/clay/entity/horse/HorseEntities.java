@@ -1,12 +1,8 @@
 package com.matthewperiut.clay.entity.horse;
 
 import com.matthewperiut.clay.Clay;
-import com.matthewperiut.clay.entity.client.ClaySoldierModel;
-import com.matthewperiut.clay.entity.client.ClaySoldierRenderer;
 import com.matthewperiut.clay.entity.client.HorseDollModel;
 import com.matthewperiut.clay.entity.client.HorseDollRenderer;
-import com.matthewperiut.clay.entity.soldier.ClaySoldierEntity;
-import com.matthewperiut.clay.entity.soldier.variant.RegularSoldier;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
