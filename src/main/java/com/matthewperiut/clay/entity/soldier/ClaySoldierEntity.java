@@ -159,7 +159,8 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         //this.startRiding(other);
         if (other instanceof HorseDollEntity)
         {
-            this.startRiding(other);
+            if (!other.hasPassengers())
+                this.startRiding(other);
         }
         return super.collidesWith(other);
     }
