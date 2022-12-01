@@ -1,19 +1,20 @@
 package com.matthewperiut.clay.entity.soldier;
 
 import com.matthewperiut.clay.Clay;
+import com.matthewperiut.clay.entity.ai.goal.FindDollMountGoal;
 import com.matthewperiut.clay.entity.ai.goal.MeleeAttackTinyGoal;
 import com.matthewperiut.clay.entity.horse.HorseDollEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -21,8 +22,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
@@ -33,10 +32,13 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.util.Objects;
+
 import static com.matthewperiut.clay.entity.soldier.Targets.AddTargets;
 
 public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, IAnimationTickable
 {
+    public HorseDollEntity horseTarget;
     public static final Identifier TEXTURE_ID = new Identifier(Clay.MOD_ID, "textures/entity/soldier/lightgray.png");
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private boolean isAnimating = false;
@@ -53,7 +55,7 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         return PathAwareEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.00f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5f)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25f)
                  .build();
     }
@@ -121,8 +123,10 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         this.goalSelector.add(5, new LookAroundGoal(this));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 1, 1));
         this.goalSelector.add(3, new MeleeAttackTinyGoal(this, 1, false));
+        this.goalSelector.add(2, new FindDollMountGoal(this, 1));
+        this.goalSelector.add(1, new SwimGoal(this));
 
-        selectTargets();
+        selectTargets(); // priority 3
 
         super.initGoals();
     }
@@ -154,18 +158,6 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     }
 
     @Override
-    public boolean collidesWith(Entity other)
-    {
-        //this.startRiding(other);
-        if (other instanceof HorseDollEntity)
-        {
-            if (!other.hasPassengers())
-                this.startRiding(other);
-        }
-        return super.collidesWith(other);
-    }
-
-    @Override
     public void onPlayerCollision(PlayerEntity player) {
         //this.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.SHEARS, 1));
         super.onPlayerCollision(player);
@@ -183,6 +175,8 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
     @Override
     public void onDeath(DamageSource damageSource)
     {
+        if (this.hasVehicle())
+            Objects.requireNonNull(this.getVehicle()).kill();
         if(damageSource.isFire())
             dropBrick = true;
         super.onDeath(damageSource);

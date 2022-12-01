@@ -21,9 +21,6 @@
   "entrypoints": {
     "main": [
       "com.matthewperiut.clay.Clay"
-    ],
-    "client": [
-      "com.matthewperiut.clay.ClayClient"
     ]
   },
   "depends": {

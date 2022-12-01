@@ -17,7 +17,7 @@ public class Targets
         if (!soldierType.isInstance(entity))
         {
             MobEntity mob = (MobEntity) entity;
-            targetSelector.add(2, new ActiveTargetGoal<>(mob, soldierType, true));
+            targetSelector.add(3, new ActiveTargetGoal<>(mob, soldierType, true));
         }
     }
 

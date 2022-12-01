@@ -7,6 +7,7 @@ import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -40,6 +41,7 @@ public class DollDispenserBehavior implements DispenserBehavior
             Entity e = entityType.spawnFromItemStack(world, stack, null, spawnPos, SpawnReason.DISPENSER, false, false);
             if (e != null)
             {
+                world.playSound((PlayerEntity)null, pos, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 world.emitGameEvent(GameEvent.ENTITY_PLACE, spawnPos, GameEvent.Emitter.of(e));
                 stack.setCount(stack.getCount()-1);
             }
