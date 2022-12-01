@@ -19,7 +19,7 @@ public class HorseDollRenderer extends GeoEntityRenderer<HorseDollEntity>
     }
 
     @Override
-    public Identifier getTextureResource(HorseDollEntity animatable)
+    public Identifier getTextureLocation(HorseDollEntity animatable)
     {
         return texture_id;
     }

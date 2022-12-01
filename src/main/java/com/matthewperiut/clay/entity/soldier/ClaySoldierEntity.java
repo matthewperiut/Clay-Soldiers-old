@@ -40,7 +40,7 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
 {
     public HorseDollEntity horseTarget;
     public static final Identifier TEXTURE_ID = new Identifier(Clay.MOD_ID, "textures/entity/soldier/lightgray.png");
-    private AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private AnimationFactory factory = new AnimationFactory(this);
     private boolean isAnimating = false;
 
     public boolean hasWeapon = true;
@@ -50,14 +50,13 @@ public class ClaySoldierEntity extends PathAwareEntity implements IAnimatable, I
         super(type, worldIn);
     }
 
-    public static DefaultAttributeContainer setAttributes()
+    public static DefaultAttributeContainer.Builder setAttributes()
     {
         return PathAwareEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.00f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0f)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.0f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25f)
-                 .build();
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25f);
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)

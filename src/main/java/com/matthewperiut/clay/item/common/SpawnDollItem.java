@@ -7,7 +7,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -15,13 +14,13 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 public class SpawnDollItem extends Item
 {
@@ -96,7 +95,8 @@ public class SpawnDollItem extends Item
         if (types.size() == 1)
             return types.get(0);
 
-        int selected = Random.createLocal().nextBetween(0, types.size()-1);
+        Random random = new Random();
+        int selected = random.nextInt(0, types.size()-1);
         return types.get(selected);
     }
 }
